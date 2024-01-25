@@ -1,0 +1,32 @@
+general:
+  debug: False
+  show_progress_bar: False
+
+  experiment_name: "Experiment"
+  num_runs: 1
+  num_anom_sets: 1
+
+  mlflow_tracking_uri: "/data/shares/stor02/tpostuvan/mlruns"
+  output_root: "/data/shares/stor02/tpostuvan/RESULTS"
+
+
+data:
+  dataset_root: "/data/shares/stor02/tpostuvan/DATASETS"
+  dataset_name: ["darpa-theia"]
+  anom_type: ["organic"]
+  val_ratio: 0.38028324152526516
+  test_ratio: 0.16068770558489873
+
+
+models:
+  EdgeBank_inf:
+    edge_bank_memory_mode: "unlimited_memory"
+  
+  EdgeBank_tw:
+    edge_bank_memory_mode: "time_window_memory"
+    time_window_mode: "fixed_proportion"
+
+
+training:
+  batch_size: 100
+  seed: 2023

@@ -1,0 +1,32 @@
+general:
+  debug: False
+  show_progress_bar: False
+
+  experiment_name: "Experiment"
+  num_runs: 3
+  num_anom_sets: 1
+
+  mlflow_tracking_uri: "/data/shares/stor02/tpostuvan/mlruns"
+  output_root: "/data/shares/stor02/tpostuvan/RESULTS"
+
+
+data:
+  dataset_root: "/data/shares/stor02/tpostuvan/DATASETS"
+  dataset_name: ["lanl"]
+  anom_type: ["organic"]
+  val_ratio: 0.35922160330600994
+  test_ratio: 0.5823753300472704
+
+
+models:
+  EdgeBank_inf:
+    edge_bank_memory_mode: "unlimited_memory"
+  
+  EdgeBank_tw:
+    edge_bank_memory_mode: "time_window_memory"
+    time_window_mode: "fixed_proportion"
+
+
+training:
+  batch_size: 1
+  seed: 2023
