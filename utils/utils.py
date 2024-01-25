@@ -8,26 +8,6 @@ import pandas as pd
 from .DataLoader import EmbeddingWithProjection
 
 
-def get_ray_head_ip() -> str:
-    """
-    Gets the head name of Ray.
-
-    Returns:
-        str: Head IP.
-    """
-    cmd = (
-        "microk8s kubectl get pods --selector=ray.io/node-type=head -o "
-        "custom-columns=POD:metadata.name --no-headers"
-    ).split(" ")
-    head_name = subprocess.check_output(cmd).decode("utf-8").strip()
-
-    cmd = (
-        "microk8s kubectl get pod " + head_name + " --template '{{.status.podIP}}'"
-    ).split(" ")
-    head_ip = subprocess.check_output(cmd).decode("utf-8").strip().replace("'", "")
-    return head_ip
-
-
 def set_random_seed(seed: int = 0):
     """
     set random seed

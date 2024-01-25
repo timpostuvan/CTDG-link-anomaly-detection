@@ -16,7 +16,6 @@ import numpy as np
 import warnings
 import shutil
 import json
-import ray
 import torch
 import torch.nn as nn
 import os.path as osp
@@ -33,7 +32,6 @@ from models.GraphMixer import GraphMixer
 from models.DyGFormer import DyGFormer
 from models.modules import ContextualLinkPredictor
 from utils.utils import (
-    get_ray_head_ip,
     set_random_seed,
     convert_to_gpu,
     get_parameter_sizes,
@@ -56,15 +54,6 @@ from utils.load_configs import (
 import tgb
 from tgb.linkanomdet.evaluate import Evaluator
 from evaluation.tgb_evaluate_linkanomdet import eval_linkanomdet_TGB
-
-
-@ray.remote(
-    num_cpus=int(os.environ.get("NUM_CPUS_PER_TASK", 4)),
-    num_gpus=float(os.environ.get("NUM_GPUS_PER_TASK", 0.0)),
-    memory=10 * 1024 * 1024 * 1024,  # 10 GB
-)
-def anomaly_detection(args: SimpleNamespace):
-    return anomaly_detection_single(args=args)
 
 
 def anomaly_detection_single(args: SimpleNamespace):
@@ -726,22 +715,8 @@ def main():
     # Add missing common hyperparameters to the config.
     common_args: dict = update_config_anomaly_detection(config)
 
-    if config.general.debug:
-        # Run on local cluster.
-        common_args["device"] = f"cuda" if torch.cuda.is_available() else "cpu"
-    else:
-        # Run on CPU cluster with Ray.
-        common_args["device"] = "cpu"
-
-        # Kubernetes cluster initialization.
-        runtime_env = {
-            "working_dir": os.getcwd(),
-            "py_modules": ["../tgb/tgb"],
-            "excludes": ["datasets/"],
-        }
-
-        head_ip = get_ray_head_ip()
-        ray.init(f"ray://{head_ip}:10001", runtime_env=runtime_env)
+    # Run on a GPU if available.
+    common_args["device"] = f"cuda" if torch.cuda.is_available() else "cpu"
 
     # Set up MLflow.
     mlflow.set_tracking_uri(f'file://{common_args["mlflow_tracking_uri"]}')
@@ -756,7 +731,6 @@ def main():
     if not isinstance(config.training.learning_rate, ListConfig):
         config.training.learning_rate = ListConfig([config.training.learning_rate])
 
-    ray_runs_ids = []
     for dataset_name, anom_type, learning_rate in itertools.product(
         config.data.dataset_name, config.data.anom_type, config.training.learning_rate
     ):
@@ -797,13 +771,7 @@ def main():
                         args = SimpleNamespace(**args)
 
                         # Run experiment.
-                        if config.general.debug:
-                            anomaly_detection_single(args=args)
-                        else:
-                            ray_runs_ids.append(anomaly_detection.remote(args=args))
-
-    if not config.general.debug:
-        _ = ray.get(ray_runs_ids)
+                        anomaly_detection_single(args=args)
 
 
 if __name__ == "__main__":

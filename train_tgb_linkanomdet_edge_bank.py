@@ -13,7 +13,6 @@ from tqdm import tqdm
 import numpy as np
 import warnings
 import json
-import ray
 import mlflow
 import itertools
 from types import SimpleNamespace
@@ -21,7 +20,6 @@ from omegaconf import OmegaConf, ListConfig
 
 from models.EdgeBank import edge_bank_link_prediction
 from utils.utils import (
-    get_ray_head_ip,
     set_random_seed,
 )
 from utils.DataLoader import (
@@ -36,15 +34,6 @@ from utils.load_configs import (
 
 import tgb
 from tgb.linkanomdet.evaluate import Evaluator
-
-
-@ray.remote(
-    num_cpus=int(os.environ.get("NUM_CPUS_PER_TASK", 4)),
-    num_gpus=float(os.environ.get("NUM_GPUS_PER_TASK", 0.0)),
-    memory=10 * 1024 * 1024 * 1024,  # 10 GB
-)
-def anomaly_detection_edge_bank(args: SimpleNamespace):
-    return anomaly_detection_edge_bank_single(args=args)
 
 
 def anomaly_detection_edge_bank_single(args: SimpleNamespace):
@@ -291,22 +280,8 @@ def main():
     # Add missing common hyperparameters to the config.
     common_args: dict = update_config_anomaly_detection(config)
 
-    if config.general.debug:
-        # Run on local cluster.
-        common_args["device"] = "cpu"
-    else:
-        # Run on CPU cluster with Ray.
-        common_args["device"] = "cpu"
-
-        # Kubernetes cluster initialization.
-        runtime_env = {
-            "working_dir": os.getcwd(),
-            "py_modules": ["../tgb/tgb"],
-            "excludes": ["datasets/"],
-        }
-
-        head_ip = get_ray_head_ip()
-        ray.init(f"ray://{head_ip}:10001", runtime_env=runtime_env)
+    # Run with CPUs.
+    common_args["device"] = "cpu"
 
     # Set up MLflow.
     mlflow.set_tracking_uri(f'file://{common_args["mlflow_tracking_uri"]}')
@@ -338,7 +313,6 @@ def main():
     if not isinstance(config.data.test_anom_type, ListConfig):
         config.data.test_anom_type = ListConfig([config.data.test_anom_type])
 
-    ray_runs_ids = []
     for dataset_name, (val_anom_type, test_anom_type) in itertools.product(
         config.data.dataset_name,
         zip(config.data.val_anom_type, config.data.test_anom_type),
@@ -380,15 +354,7 @@ def main():
                         args = SimpleNamespace(**args)
 
                         # Run experiment.
-                        if config.general.debug:
-                            anomaly_detection_edge_bank_single(args=args)
-                        else:
-                            ray_runs_ids.append(
-                                anomaly_detection_edge_bank.remote(args=args)
-                            )
-
-    if not config.general.debug:
-        _ = ray.get(ray_runs_ids)
+                        anomaly_detection_edge_bank_single(args=args)
 
 
 if __name__ == "__main__":

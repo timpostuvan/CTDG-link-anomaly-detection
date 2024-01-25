@@ -79,7 +79,6 @@ def update_config_anomaly_detection(config: DictConfig) -> dict:
         test_interval_epochs=10,
         seed=2023,
         show_progress_bar=False,
-        debug=False,
     )
 
     # Check that groups of hyperparameters are specified.

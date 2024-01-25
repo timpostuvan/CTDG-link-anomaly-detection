@@ -1,5 +1,4 @@
 general:
-  debug: False
   show_progress_bar: False
 
   experiment_name: "Experiment"
