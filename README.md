@@ -64,7 +64,7 @@ python train_tgb_linkanomdet.py --config_path=experiments/example.yaml
 ```
 Note that `<OUTPUT-DIR>` directory in the configuration file has to be substituted with the same directory that was specified when generating anomalies.
 
-The results of the experiment and the best model checkpoint are saved in `<OUTPUT_DIR>/EXPERIMENTS/saved_results` and `<OUTPUT_DIR>/EXPERIMENTS/saved_models`, respectively.
+The results of the experiment and the best model checkpoints are saved in `<OUTPUT_DIR>/EXPERIMENTS/saved_results` and `<OUTPUT_DIR>/EXPERIMENTS/saved_models`, respectively.
 
 
 ## Experiments From the Paper
@@ -114,4 +114,4 @@ python train_tgb_linkanomdet_without_improved_training.py --config_path=experime
 ```
 
 ## Acknowledgments
-The code is adapted from [TGB_Baselines repository](https://github.com/fpour/TGB_Baselines). If this code repo is useful for your research, please consider citing the original authors from [TGB](https://arxiv.org/pdf/2307.01026.pdf) paper as well.
+The code is adapted from [TGB_Baselines repository](https://github.com/fpour/TGB_Baselines). If this code repository is useful for your research, please consider citing the original authors from [TGB](https://arxiv.org/pdf/2307.01026.pdf) paper as well.
