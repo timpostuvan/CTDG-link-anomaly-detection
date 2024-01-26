@@ -8,17 +8,11 @@ import logging
 import timeit
 import time
 import datetime
-import sys
 import os
-import math
-from tqdm import tqdm
-import numpy as np
 import warnings
-import shutil
 import json
 import torch
 import torch.nn as nn
-import os.path as osp
 import mlflow
 import itertools
 from types import SimpleNamespace
@@ -35,14 +29,10 @@ from utils.utils import (
     set_random_seed,
     convert_to_gpu,
     get_parameter_sizes,
-    create_optimizer,
 )
-from utils.utils import get_neighbor_sampler, NegativeEdgeSampler
-from evaluate_models_utils import evaluate_model_link_prediction
-from utils.metrics import get_link_prediction_metrics
+from utils.utils import get_neighbor_sampler
 from utils.DataLoader import (
     get_idx_data_loader,
-    get_link_prediction_data,
     get_link_anom_det_data_TRANS_TGB,
 )
 from utils.EarlyStopping import EarlyStopping

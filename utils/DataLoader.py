@@ -1,4 +1,4 @@
-from typing import Optional, Dict, Any, Set, Tuple
+from typing import Optional, Tuple
 
 import torch
 from torch.utils.data import Dataset, DataLoader
@@ -6,8 +6,6 @@ import numpy as np
 import random
 import pandas as pd
 
-from torch_geometric.loader import TemporalDataLoader
-import os.path as osp
 
 # TGB imports
 from tgb.linkanomdet.dataset_pyg import PyGLinkAnomDetDataset

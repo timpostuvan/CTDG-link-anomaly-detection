@@ -4,15 +4,7 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 import numpy as np
-import logging
-import time
-import argparse
-import os
-import json
 
-from models.EdgeBank import edge_bank_link_prediction
-from utils.metrics import get_link_prediction_metrics, get_node_classification_metrics
-from utils.utils import set_random_seed
 from utils.utils import NeighborSampler
 from utils.DataLoader import Data
 
