@@ -1,7 +1,7 @@
-# Towards Learning-Based Edge Anomaly Detection in Continuous-Time Temporal Graphs
+# Towards Learning-Based Link Anomaly Detection in Continuous-Time Temporal Graphs
 
 ## Overview
-This repository contains the codebase supporting the findings of the paper "Towards Learning-Based Edge Anomaly Detection in Continuous-Time Temporal Graphs".
+This repository contains the codebase supporting the findings of the paper "Towards Learning-Based Link Anomaly Detection in Continuous-Time Temporal Graphs".
 With the code provided in this repository, we explore performance of temporal graph learning models on link anomaly detection task.
 See our paper for more details.
 
