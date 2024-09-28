@@ -3,7 +3,7 @@
 ## Overview
 This repository contains the codebase supporting the findings of the paper "Learning-Based Link Anomaly Detection in Continuous-Time Dynamic Graphs".
 With the code provided in this repository, we explore performance of temporal graph learning models on link anomaly detection task.
-See our paper for more details.
+See [our paper](https://arxiv.org/pdf/2405.18050) for more details.
 
 
 ## Install Dependencies
