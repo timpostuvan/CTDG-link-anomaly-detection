@@ -5,6 +5,7 @@ This repository contains the codebase supporting the findings of the paper "Lear
 With the code provided in this repository, we explore performance of temporal graph learning models on link anomaly detection task.
 See our paper for more details.
 
+
 ## Install Dependencies
 Our implementation works with python >= 3.9 and can be installed as follows:
 
@@ -113,5 +114,18 @@ python train_tgb_linkanomdet_without_conditioning_on_context.py --config_path=ex
 python train_tgb_linkanomdet_without_improved_training.py --config_path=experiments/experiment_without_improved_training.yaml
 ```
 
+
 ## Acknowledgments
 The code is adapted from [TGB_Baselines repository](https://github.com/fpour/TGB_Baselines). If this code repository is useful for your research, please consider citing the original authors from [TGB](https://arxiv.org/pdf/2307.01026.pdf) paper as well.
+
+
+## Citation
+If this repository is helpful for your research, please consider citing our paper below.
+```{bibtex}
+@article{povstuvan2024learning,
+  title={Learning-Based Link Anomaly Detection in Continuous-Time Dynamic Graphs},
+  author={Po{\v{s}}tuvan, Tim and Grohnfeldt, Claas and Russo, Michele and Lovisotto, Giulio},
+  journal={arXiv preprint arXiv:2405.18050},
+  year={2024}
+}
+```
