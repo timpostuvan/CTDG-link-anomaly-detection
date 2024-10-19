@@ -122,10 +122,12 @@ The code is adapted from [TGB_Baselines repository](https://github.com/fpour/TGB
 ## Citation
 If this repository is helpful for your research, please consider citing our paper below.
 ```{bibtex}
-@article{povstuvan2024learning,
+@article{postuvan2024learningbased,
   title={Learning-Based Link Anomaly Detection in Continuous-Time Dynamic Graphs},
-  author={Po{\v{s}}tuvan, Tim and Grohnfeldt, Claas and Russo, Michele and Lovisotto, Giulio},
-  journal={arXiv preprint arXiv:2405.18050},
-  year={2024}
+  author={Tim Postuvan and Claas Grohnfeldt and Michele Russo and Giulio Lovisotto},
+  journal={Transactions on Machine Learning Research},
+  issn={2835-8856},
+  year={2024},
+  url={https://openreview.net/forum?id=8imVCizVEw},
 }
 ```
