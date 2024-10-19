@@ -128,6 +128,6 @@ If this repository is helpful for your research, please consider citing our pape
   journal={Transactions on Machine Learning Research},
   issn={2835-8856},
   year={2024},
-  url={https://openreview.net/forum?id=8imVCizVEw},
+  url={https://openreview.net/forum?id=8imVCizVEw}
 }
 ```
